@@ -1,0 +1,16 @@
+Build.PL
+Changes
+MANIFEST
+README
+lib/NLP/GATE.pm
+lib/NLP/GATE/Annotation.pm
+lib/NLP/GATE/AnnotationSet.pm
+lib/NLP/GATE/Document.pm
+t/00-load.t
+t/30Annotation.t
+t/40AnnotationSet.t
+t/50Document.t
+t/doc_enc1.xml
+t/pod-coverage.t
+t/pod.t
+META.yml
