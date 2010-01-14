@@ -12,11 +12,11 @@ NLP::GATE::AnnotationSet - A class for representing GATE-like annotation sets
 
 =head1 VERSION
 
-Version 0.1
+Version 0.2
 
 =cut
 
-our $VERSION = '0.1';
+our $VERSION = '0.2';
 
 =head1 SYNOPSIS
 
@@ -27,27 +27,27 @@ our $VERSION = '0.1';
   $arrayref = $annset->getAsArrayRef();
   $ann = $annset->getByIndex();
   $ann = $annset->size();
-  
+
 =head1 DESCRIPTION
 
 This is a simple class representing a annotation set for documents
 in the format the GATE software (http://gate.ac.uk/) uses.
 
 An annotation set can contain any number of NLP::GATE::Annotation objects.
-Currently, there is no code to make sure that annotations are only added 
+Currently, there is no code to make sure that annotations are only added
 once.
 
 Annotation sets behave a bit like arrays in that each annotation can be
-addressed by an index and each set always contains a known number of 
-annotations. 
+addressed by an index and each set always contains a known number of
+annotations.
 
-TODO: use the offset indices in method getByOffset() 
+TODO: use the offset indices in method getByOffset()
 
 =head1 METHODS
 
 =head2 new()
 
-Create a new annotation set. The name of the annotationset is not a property of the 
+Create a new annotation set. The name of the annotationset is not a property of the
 set, instead, each set is associated with a name when stored with a NLP::GATE::Document
 object using the setAnnotationSet() method.
 
@@ -66,7 +66,7 @@ sub new {
 
 =head2 add($annotation)
 
-Add an annotation object to the annotation set. 
+Add an annotation object to the annotation set.
 
 =cut
 
@@ -107,7 +107,7 @@ the string given in the parameter as a regular expression. Default is "exact".
 
 If some feature is specified in the featureset it MUST occur in the feature
 set of the annotation AND satisfy the testing matchtype method of testing for
-equality. 
+equality.
 
 The annotations in the new set will be the same as in the original set,
 so changing the annotation objects will change them in both sets!
@@ -122,7 +122,7 @@ sub get {
   my $newset = NLP::GATE::AnnotationSet->new();
   # $type is undef, do not check type,
   # if $features is undef, do not check features
-  # if both are undef, this will a new annotation set with all the 
+  # if both are undef, this will a new annotation set with all the
   # annotations of the original set
   foreach my $ann (@{$self->{anns}}) {
     my $cond1 = 0;
@@ -135,12 +135,12 @@ sub get {
     if(!defined($features)) {
       $cond2 = 1;
     } else {
-      # if we have a feature map, all features in the feature map 
+      # if we have a feature map, all features in the feature map
       # must have the same value as in the annotation
       # In other words, if one feature has a different value, the condition fails
       $cond2 = 1;
       foreach my $k (keys %$features) {
-        if($matchtype eq "exact" && 
+        if($matchtype eq "exact" &&
            $ann->getFeature($k) ne $features->{$k}) {
           $cond2 = 0;
           last;
@@ -172,12 +172,12 @@ as the get method does.
 
 If from one of the parameters is undef, any value is allowed for the match
 to be successful.
- 
+
 The parameter $featurematchtype specifies how features are matched: "exact" will
 do an exact string comparison, "nocase" will compare after converting both
 strings to lower case using perl's lc function, and "regexp" will interpret
 the string given in the parameter as a regular expression. Default is "exact".
-  
+
 The $rangematchtype argument specifies how offsets will be compared, if
 they are specified (case does not matter):
   "COVER" - any annotation with a from less than or equal than $from and a
@@ -188,7 +188,7 @@ they are specified (case does not matter):
   "OVERLAP" - any annotation that overlaps with the given range
 
 For example to find an annotation that fully contains the text from offset
-12 to offset 17, use getByOffset(12,17,undef,undef,"cover"). 
+12 to offset 17, use getByOffset(12,17,undef,undef,"cover").
 
 =cut
 sub getByOffset {
@@ -200,7 +200,7 @@ sub getByOffset {
   my $featurematchtype = shift || "exact";
   $featurematchtype = lc($featurematchtype);
   my $rangematchtype = shift || "exact";
-  $rangematchtype = lc($rangematchtype); 
+  $rangematchtype = lc($rangematchtype);
   my $newset = NLP::GATE::AnnotationSet->new();
   #print STDERR "Looking for annotation in range $from to $to\n";
   foreach my $ann (@{$self->{anns}}) {
@@ -217,12 +217,12 @@ sub getByOffset {
     if(!defined($features)) {
       $cond2 = 1;
     } else {
-      # if we have a feature map, all features in the feature map 
+      # if we have a feature map, all features in the feature map
       # must have the same value as in the annotation
       # In other words, if one feature has a different value, the condition fails
       $cond2 = 1;
       foreach my $k (keys %$features) {
-        if($featurematchtype eq "exact" && 
+        if($featurematchtype eq "exact" &&
            $ann->getFeature($k) ne $features->{$k}) {
           $cond2 = 0;
           last;
@@ -259,13 +259,13 @@ sub getByOffset {
     }
     # overlap is successful if either with have both to and from and
     # either to or from or both of the annotation are  within the given
-    # range, or one of to or from is undefined 
+    # range, or one of to or from is undefined
     if($rangematchtype eq "overlap" & defined($from) && defined($to)) {
-      if(($ann->getTo() >= $from && $ann->getTo() <= $to) || 
+      if(($ann->getTo() >= $from && $ann->getTo() <= $to) ||
          ($ann->getFrom() >= $from && $ann->getFrom() <= $to)) {
         $cond3 = 1;
         $cond4 = 1;
-      } 
+      }
     } elsif($rangematchtype eq "overlap" && (!defined($from) || !defined($to))) {
       $cond3 = 1;
       $cond4 = 1;
@@ -281,7 +281,7 @@ sub getByOffset {
 =head2 getAsArrayRef()
 
 Return an array reference whose elements are the Annotation objects in this
-set. 
+set.
 
 =cut
 
@@ -298,7 +298,7 @@ sub getAsArrayRef {
 =head2 getAsArray()
 
 Return an array  whose elements are the Annotation objects in this
-set. 
+set.
 
 =cut
 
@@ -351,7 +351,7 @@ If an index already exist it is discarded and a new index is built.
 
 =cut
 sub indexByOffsetFrom {
-  my $self = shift; 
+  my $self = shift;
   my $indexfrom = Tree::RB->new(sub {$_[0] <=> $_[1]});
   my $indexto   = Tree::RB->new(sub {$_[0] <=> $_[1]});
   my $i = 0;
@@ -375,6 +375,44 @@ sub _getArrayRef {
 =head1 AUTHOR
 
 Johann Petrak, C<< <firstname.lastname-at-jpetrak-dot-com> >>
+
+=head1 BUGS
+
+Please report any bugs or feature requests to
+C<bug-gate-document at rt.cpan.org>, or through the web interface at
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=NLP::GATE>.
+I will be notified, and then you'll automatically be notified of progress on
+your bug as I make changes.
+
+
+=head1 SUPPORT
+
+You can find documentation for this module with the perldoc command.
+
+    perldoc NLP::GATE
+
+You can also look for information at:
+
+=over 4
+
+=item * AnnoCPAN: Annotated CPAN documentation
+
+L<http://annocpan.org/~JOHANNP/NLP-GATE-0.1/>
+
+=item * CPAN Ratings
+
+L<http://cpanratings.perl.org/rate/?distribution=NLP-GATE>
+
+=item * RT: CPAN's request tracker
+
+L<http://rt.cpan.org/Public/Dist/Display.html?Name=NLP-GATE>
+
+=item * Search CPAN
+
+L<http://search.cpan.org/~johannp/NLP-GATE-0.1/>
+
+=back
+
 
 =cut
 1; # End of NLP::GATE::AnnotationSet

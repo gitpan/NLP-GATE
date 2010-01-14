@@ -10,11 +10,11 @@ NLP::GATE::Annotation - A class for representing GATE-like annotations
 
 =head1 VERSION
 
-Version 0.1
+Version 0.2
 
 =cut
 
-our $VERSION = '0.1';
+our $VERSION = '0.2';
 
 =head1 SYNOPSIS
 
@@ -32,20 +32,20 @@ our $VERSION = '0.1';
 
 =head1 DESCRIPTION
 
-This is a simple class representing a GATE-like annotation for 
+This is a simple class representing a GATE-like annotation for
 document text. The annotation knows about the text offsets from
-start (first character has offset 0) to end (the offset of the 
+start (first character has offset 0) to end (the offset of the
 byte following the annotation).
 Zero length annotations should be avoided as gate cannot handle
-them properly. 
+them properly.
 
-All functions that set values return the original 
+All functions that set values return the original
 annotation object.
 
 This library does not attempt to mirror the Java API or the way how
 annotations are represented and handled in the original GATE API.
 
-A major difference to the GATE API is that annotations can live 
+A major difference to the GATE API is that annotations can live
 completely independent from annotation sets or documents and have their
 own constructor. An annotation is simply a range that is assiciated
 with a type and a map of features.
@@ -58,7 +58,7 @@ seperately modeled.
 
 =head2 new()
 
-Create a new annotation. 
+Create a new annotation.
 
 =cut
 
@@ -167,7 +167,7 @@ sub setFeature {
 
 =head2 setFeatureType($name,$type)
 
-Add or replace the Java type associated with the feature. 
+Add or replace the Java type associated with the feature.
 If this method is never used, the default for a feature is java.lang.String.
 
 =cut
@@ -270,6 +270,43 @@ sub _getFeaturesString {
 =head1 AUTHOR
 
 Johann Petrak, C<< <firstname.lastname-at-jpetrak-dot-com> >>
+
+=head1 BUGS
+
+Please report any bugs or feature requests to
+C<bug-gate-document at rt.cpan.org>, or through the web interface at
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=NLP::GATE>.
+I will be notified, and then you'll automatically be notified of progress on
+your bug as I make changes.
+
+
+=head1 SUPPORT
+
+You can find documentation for this module with the perldoc command.
+
+    perldoc NLP::GATE
+
+You can also look for information at:
+
+=over 4
+
+=item * AnnoCPAN: Annotated CPAN documentation
+
+L<http://annocpan.org/~JOHANNP/NLP-GATE-0.1/>
+
+=item * CPAN Ratings
+
+L<http://cpanratings.perl.org/rate/?distribution=NLP-GATE>
+
+=item * RT: CPAN's request tracker
+
+L<http://rt.cpan.org/Public/Dist/Display.html?Name=NLP-GATE>
+
+=item * Search CPAN
+
+L<http://search.cpan.org/~johannp/NLP-GATE-0.1/>
+
+=back
 
 =cut
 1; # End of NLP::GATE::Annotation

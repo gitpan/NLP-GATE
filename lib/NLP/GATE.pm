@@ -1,5 +1,7 @@
 package NLP::GATE;
 
+use 5.008_001;
+
 use warnings;
 use strict;
 
@@ -13,16 +15,16 @@ NLP::GATE - Handle GATE documents and annotations
 
 =head1 VERSION
 
-Version 0.1
+Version 0.2
 
 =cut
 
-our $VERSION = '0.1';
+our $VERSION = '0.2';
 
 =head1 SYNOPSIS
 
-    use NLP::GATE; 
-    
+    use NLP::GATE;
+
     my $doc = NLP::GATE::Document->new();
     $doc->setText($text);
     $ann = NLP::GATE::Annotation->new();
@@ -54,6 +56,42 @@ For more information on those see:
 
 Johann Petrak, C<< <firstname.lastname-at-jpetrak-dot-com> >>
 
+=head1 BUGS
+
+Please report any bugs or feature requests to
+C<bug-gate-document at rt.cpan.org>, or through the web interface at
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=NLP::GATE>.
+I will be notified, and then you'll automatically be notified of progress on
+your bug as I make changes.
+
+
+=head1 SUPPORT
+
+You can find documentation for this module with the perldoc command.
+
+    perldoc NLP::GATE
+
+You can also look for information at:
+
+=over 4
+
+=item * AnnoCPAN: Annotated CPAN documentation
+
+L<http://annocpan.org/~JOHANNP/NLP-GATE-0.1/>
+
+=item * CPAN Ratings
+
+L<http://cpanratings.perl.org/rate/?distribution=NLP-GATE>
+
+=item * RT: CPAN's request tracker
+
+L<http://rt.cpan.org/Public/Dist/Display.html?Name=NLP-GATE>
+
+=item * Search CPAN
+
+L<http://search.cpan.org/~johannp/NLP-GATE-0.1/>
+
+=back
 
 =head1 COPYRIGHT & LICENSE
 

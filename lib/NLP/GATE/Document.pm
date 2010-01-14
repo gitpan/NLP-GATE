@@ -16,11 +16,11 @@ NLP::GATE::Document - Class for manipulating GATE-like documents
 
 =head1 VERSION
 
-Version 0.1
+Version 0.2
 
 =cut
 
-our $VERSION = '0.1';
+our $VERSION = '0.2';
 
 =head1 SYNOPSIS
 
@@ -39,7 +39,7 @@ our $VERSION = '0.1';
 
 =head1 DESCRIPTION
 
-This is a simple class representing a document with annotations and 
+This is a simple class representing a document with annotations and
 features similar to how documents are represented in GATE.
 The class can produce a string representation of the document that
 is in XML format and should be readable by GATE.
@@ -82,6 +82,29 @@ sub setText {
   return $self;
 }
 
+=head2 appendText($theText)
+
+Append text to the current text content of the document.
+In scalar context, returns the document object.
+In array context, returns the from and to offsets of the
+newly added text. This can be used to add annotations
+for that text snipped more easily.
+
+=cut
+
+sub appendText {
+  my $self = shift;
+  my $text = shift;
+  my $from = length($self->{text});
+  my $to = $from + length($text);
+  $self->{text} .= $text;
+  if(wantarray) {
+    return ($from,$to);
+  } else {
+    return $self;
+  }
+}
+
 =head2 getText()
 
 Get the plain text of the document.
@@ -112,8 +135,8 @@ Return the annotation set with that name. Return undef
 if no set with such a name is found.
 
 This is more straightforward than the original Java implementation in GATE:
-passing an empty string or undef as $name will return the default 
-annotation set. 
+passing an empty string or undef as $name will return the default
+annotation set.
 
 =cut
 sub getAnnotationSet {
@@ -123,7 +146,7 @@ sub getAnnotationSet {
 }
 
 
-=head2 getAnnotationSetNames 
+=head2 getAnnotationSetNames
 
 Return a list of known annotation set names. This will include an entry that is the empty string
 that stands for the default annotation set.
@@ -134,10 +157,10 @@ sub getAnnotationSetNames {
   return keys %{$self->{annotationsets}};
 }
 
-=head2 setAnnotationSet ($set[,$name]) 
+=head2 setAnnotationSet ($set[,$name])
 
-Store the annotation set object with the document under the given 
-annotation set name. If the name is the empty string or undef, the 
+Store the annotation set object with the document under the given
+annotation set name. If the name is the empty string or undef, the
 default annotation set is stored or replaced.
 Any existing annotation set with that name will be destroyed (unless the
 object to replace it is the original set object).
@@ -184,7 +207,7 @@ sub getFeature {
 
 =head2 setFeatureType($name,$type)
 
-Set the Java type for the feature. 
+Set the Java type for the feature.
 
 =cut
 
@@ -196,7 +219,7 @@ sub setFeatureType {
   return $self;
 }
 
-=head2 getFeatureType($name) 
+=head2 getFeatureType($name)
 
 Return the Java type for a feature. If the type has never been set,
 the default is java.lang.String.
@@ -213,10 +236,10 @@ sub getFeatureType {
 =head2 fromXMLFile($filename)
 
 Read a GATE document from an XML file.
-All content of the current object, including features, annotations and 
+All content of the current object, including features, annotations and
 text is discarded.
 
-=cut 
+=cut
 
 sub fromXMLFile {
   my $self = shift;
@@ -224,7 +247,7 @@ sub fromXMLFile {
   my $parser = XML::LibXML->new();
   _setParserOptions($parser);
   my $doc = undef;
-  ## the parse_file method outputs a very strange error message when the file is 
+  ## the parse_file method outputs a very strange error message when the file is
   ## not found - therefore we catch all errors and add a little note just to make
   ## sure the user checks this possible cause.
   eval {
@@ -289,7 +312,7 @@ sub _parseXML {
       }
       my $fname = $n[0]->textContent();
       $self->{features}->{$fname} = $v[0]->textContent();
-      $self->{featuretypes}->{$fname} = $v[0]->getAttribute("className"); 
+      $self->{featuretypes}->{$fname} = $v[0]->getAttribute("className");
     }
   }
   ## process the document text and create a map of node ids to text offsets
@@ -316,10 +339,10 @@ sub _parseXML {
   $self->{text} = $text;
   ## process the annotation features, replacing node ids with offset information
   for my $annset ($doc->findnodes("/GateDocument/AnnotationSet")) {
-    ## figure out the name, then create a new annotation set 
+    ## figure out the name, then create a new annotation set
     my $name = _getAttr($annset,"Name","");
     my $myannset = NLP::GATE::AnnotationSet->new();
-    
+
     ## find all the annotations in that annotation set
     for my $ann ($annset->findnodes("Annotation")) {
       # get attributes Id, Type, StartNode, EndNode
@@ -350,7 +373,7 @@ sub _parseXML {
     } # for ann
     $self->{annotationsets}->{$name} = $myannset;
   } # for annset
-  
+
 }
 
 sub _getAttr {
@@ -375,7 +398,7 @@ sub _getAttr {
 Create an actual XML representation that can be used by GATE from the internal
 representation of the document.
 
-=cut 
+=cut
 
 sub toXML {
   my $self = shift;
@@ -412,7 +435,7 @@ sub toXML {
   $xml->endTag("TextWithNodes");
   $ret .= "\n";
   # the default annotation set is always there
-  
+
   # use a unique id for all annotations over all sets
   my $annid = 0;
   $xml->comment("The default annotation set");
@@ -482,7 +505,7 @@ sub _outputFeatures {
   }
 }
 
-## this will generate an array with offsets for all from and 
+## this will generate an array with offsets for all from and
 ## to offsets needed for the annotations.
 sub _getOffsets {
   my $self = shift;
@@ -522,7 +545,7 @@ Johann Petrak, C<< <firstname.lastname-at-jpetrak-dot-com> >>
 
 Please report any bugs or feature requests to
 C<bug-gate-document at rt.cpan.org>, or through the web interface at
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=GATE>.
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=NLP::GATE>.
 I will be notified, and then you'll automatically be notified of progress on
 your bug as I make changes.
 
@@ -530,7 +553,7 @@ your bug as I make changes.
 
 You can find documentation for this module with the perldoc command.
 
-    perldoc GATE
+    perldoc NLP::GATE
 
 You can also look for information at:
 
@@ -538,19 +561,19 @@ You can also look for information at:
 
 =item * AnnoCPAN: Annotated CPAN documentation
 
-L<http://annocpan.org/dist/GATE>
+L<http://annocpan.org/~JOHANNP/NLP-GATE-0.1/>
 
 =item * CPAN Ratings
 
-L<http://cpanratings.perl.org/d/GATE>
+L<http://cpanratings.perl.org/rate/?distribution=NLP-GATE>
 
 =item * RT: CPAN's request tracker
 
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=GATE>
+L<http://rt.cpan.org/Public/Dist/Display.html?Name=NLP-GATE>
 
 =item * Search CPAN
 
-L<http://search.cpan.org/dist/GATE>
+L<http://search.cpan.org/~johannp/NLP-GATE-0.1/>
 
 =back
 

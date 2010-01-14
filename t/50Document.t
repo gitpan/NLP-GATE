@@ -1,7 +1,8 @@
 #!perl
 
-
-use Test::More tests => 7;
+use File::Temp qw/ tempfile /;
+use Carp;
+use Test::More tests => 8;
 
 BEGIN { use_ok NLP::GATE }
 
@@ -15,7 +16,7 @@ can_ok("NLP::GATE::Document", 'new');
 my $doc1 = NLP::GATE::Document->new();
 isa_ok($doc1, 'NLP::GATE::Document');
 
-can_ok($doc1,qw( fromXML fromXMLFile getAnnotationSet getFeature getFeatureType getText getTextForAnnotation 
+can_ok($doc1,qw( fromXML fromXMLFile getAnnotationSet getFeature getFeatureType getText getTextForAnnotation
   new setAnnotationSet setFeature setFeatureType setText toXML ) );
 
 ok($doc1->setText("Some text for the document"),'Can set document text');
@@ -43,6 +44,13 @@ $doc2->fromXML($xml);
 
 is_deeply($doc1,$doc2,"same after toXML and fromXML");
 
+my $toAppend = "this is the appended text";
+my ($from,$to) = $doc2->appendText($toAppend);
+my $appendAnn = NLP::GATE::Annotation->new("APPENDED",$from,$to);
+my $appendedText = $doc2->getTextForAnnotation($appendAnn);
+
+is($appendedText,$toAppend,"correctly return offsets for appended text");
+
 my $doc3 = NLP::GATE::Document->new();
 my $doc4 = NLP::GATE::Document->new();
 #diag( "Parsing a big document, this can take a while ...." );
@@ -52,7 +60,8 @@ $doc4->fromXML($xml);
 
 is_deeply($doc3,$doc4,"same after toXML and fromXML for external doc");
 
-my $fn = "/tmp/GATE_doc_enc1_$$.xml";
+#my $fn = "/tmp/GATE_doc_enc1_$$.xml";
+my (undef, $fn) = tempfile(UNLINK=>1);
 open(OUT,">:utf8","$fn") or die "Cannot open $fn for writing $!";
 print OUT $xml;
 close OUT;
