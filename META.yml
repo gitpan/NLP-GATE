@@ -1,6 +1,6 @@
 ---
 name: NLP-GATE
-version: 0.2
+version: 0.3
 author:
   - 'Johann Petrak <firstnameDOTlastname_AT_jpetrakDOTcom>'
 abstract: Handle GATE documents and annotations
@@ -16,16 +16,16 @@ requires:
 provides:
   NLP::GATE:
     file: lib/NLP/GATE.pm
-    version: 0.2
+    version: 0.3
   NLP::GATE::Annotation:
     file: lib/NLP/GATE/Annotation.pm
-    version: 0.2
+    version: 0.3
   NLP::GATE::AnnotationSet:
     file: lib/NLP/GATE/AnnotationSet.pm
-    version: 0.2
+    version: 0.3
   NLP::GATE::Document:
     file: lib/NLP/GATE/Document.pm
-    version: 0.2
+    version: 0.3
 generated_by: Module::Build version 0.280801
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html

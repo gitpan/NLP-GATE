@@ -10,11 +10,11 @@ NLP::GATE::Annotation - A class for representing GATE-like annotations
 
 =head1 VERSION
 
-Version 0.2
+Version 0.3
 
 =cut
 
-our $VERSION = '0.2';
+our $VERSION = '0.3';
 
 =head1 SYNOPSIS
 
@@ -76,6 +76,7 @@ sub new {
   if(!defined($toOffset)) {
     croak "Must specify to offset when creating an annotation";
   }
+  my $featurehashref = shift;
   my $self = bless {
     type => $type,
     fromOffset => $fromOffset,
@@ -83,6 +84,9 @@ sub new {
     features => {},
     featuretypes => {},
     }, ref($class) || $class;
+  foreach my $key ( keys %$featurehashref) {
+    $self->setFeature($key,$featurehashref->{$key});
+  }
   return $self;
 }
 
