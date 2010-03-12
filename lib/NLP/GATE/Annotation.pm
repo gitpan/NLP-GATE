@@ -10,11 +10,11 @@ NLP::GATE::Annotation - A class for representing GATE-like annotations
 
 =head1 VERSION
 
-Version 0.3
+Version 0.4
 
 =cut
 
-our $VERSION = '0.3';
+our $VERSION = '0.4';
 
 =head1 SYNOPSIS
 
@@ -198,6 +198,19 @@ sub getFeatureType {
   my $name = shift;
   return undef unless $self->{features}->{$name};
   return $self->{featuretypes}->{$name} || "java.lang.String";
+}
+
+
+=head2 getFeatureNames()
+
+Return an array of feature names for this annotation.
+The order of feature names in the array is random and may change between
+successive calls.
+
+=cut
+sub getFeatureNames() {
+  my $self = shift;
+  return keys %{$self->{features}};
 }
 
 
