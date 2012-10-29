@@ -10,11 +10,11 @@ NLP::GATE::Annotation - A class for representing GATE-like annotations
 
 =head1 VERSION
 
-Version 0.4
+Version 0.6
 
 =cut
 
-our $VERSION = '0.4';
+our $VERSION = '0.6';
 
 =head1 SYNOPSIS
 
@@ -26,7 +26,7 @@ our $VERSION = '0.4';
   $ann->setFeature($name,$value);
   $ann->setFeatureType($name,$type);
   $value = $ann->getFeature($name);
-  $tyüe = $ann->getFeatureType($name);
+  $type = $ann->getFeatureType($name);
   $from = $ann->getFrom();
   $to = $ann->getTo();
 
@@ -309,7 +309,7 @@ You can also look for information at:
 
 =item * AnnoCPAN: Annotated CPAN documentation
 
-L<http://annocpan.org/~JOHANNP/NLP-GATE-0.1/>
+L<http://annocpan.org/~JOHANNP/NLP-GATE/>
 
 =item * CPAN Ratings
 
@@ -321,7 +321,7 @@ L<http://rt.cpan.org/Public/Dist/Display.html?Name=NLP-GATE>
 
 =item * Search CPAN
 
-L<http://search.cpan.org/~johannp/NLP-GATE-0.1/>
+L<http://search.cpan.org/~johannp/NLP-GATE/>
 
 =back
 

@@ -1,7 +1,9 @@
 Build.PL
+Makefile.PL
 Changes
 MANIFEST
 README
+TODO
 lib/NLP/GATE.pm
 lib/NLP/GATE/Annotation.pm
 lib/NLP/GATE/AnnotationSet.pm

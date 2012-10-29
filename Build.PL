@@ -11,10 +11,11 @@ my $builder = Module::Build->new(
     dist_version_from   => 'lib/NLP/GATE.pm',
     requires => {
         'perl'          => '5.8.1',
-        'File::Temp'    => 0,
-        'Test::More'    => 0,
-        'XML::Writer'   => 0,
-        'XML::LibXML'   => 0,
+        'Test::More'    => '0.92',
+        'File::Temp'    => '0.18',
+        'FindBin'       => 0,
+        'XML::Writer'   => '0.605',
+        'XML::LibXML'   => '1.69',
 
     },
     add_to_cleanup      => [ 'NLP-GATE-*' ],
